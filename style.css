@@ -54,14 +54,57 @@ body {
     background-color: #fff;
     padding: 30px;
     border-radius: 8px;
+    max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: space-between;
 }
+
 
 .message {
     font-size: 1rem;
     color: #333;
     text-align: center;
     width: 100%;
+}
+
+.task-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 1rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-btn, .delete-btn {
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.edit-btn {
+    background-color: hsl(45, 100%, 51%);
+}
+
+.edit-btn:hover {
+    background-color: hsl(45, 100%, 60%);
+}
+
+.edit-btn:active {
+    background-color: hsl(45, 100%, 65%);
+}
+
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: hsl(354, 70%, 60%);
+}
+
+.delete-btn:active {
+    background-color: hsl(354, 70%, 65%);
 }
