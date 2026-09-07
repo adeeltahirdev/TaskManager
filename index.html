@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
+
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
     
+    <!-- <h1 class="heading">Task Manager</h1> -->
+    <div class="container">
+        <div class="addCard">
+            <input type="text" id="add" class="addTask">
+            <button type="submit" id="submit" class="add-btn" onclick="add_task()">Add Task</button>
+        </div>
+        <div class="displayTask" id="display">
+            <ol class="tasks" id="taskList"></ol>
+        </div>
+    </div>
     
-    
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
