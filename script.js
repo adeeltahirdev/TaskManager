@@ -2,6 +2,8 @@ const addtask = document.getElementById('add')
 const submit = document.getElementById('submit')
 
 
+// Function to add tasks
+
 function add_task() {
 
     const task = addtask.value
@@ -22,6 +24,7 @@ function add_task() {
             <div>
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn">Delete</button>
+                <button class="complete-btn">Done</button>
             </div>
         `
 
@@ -40,6 +43,8 @@ function add_task() {
 }
 
 
+// Reteriving tasks on the referesh 
+
 const tasks = JSON.parse(localStorage.getItem('task'))
 
 if (tasks) {
@@ -56,7 +61,8 @@ if (tasks) {
 
             <div>
                 <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
+                <button class="delete-btn" onclick="delete_task()">Delete</button>
+                <button class="complete-btn">Done</button>
             </div>
         `
 
@@ -77,3 +83,7 @@ else {
 
     task.appendChild(message)
 }
+
+
+// Function to delele the task
+
