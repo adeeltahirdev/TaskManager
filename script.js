@@ -4,14 +4,53 @@ const submit = document.getElementById('submit')
 
 // Function to add tasks
 
-function add_task() {
+// function add_task() {
 
+//     const task = addtask.value
+//     const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+//     if (task) {
+
+//         tasks.push(task)
+
+//         const taskList = document.getElementById('taskList')
+
+//         const taskItem = document.createElement('li')
+//         taskItem.classList.add('task-item')
+
+//         taskItem.innerHTML = `
+//             <span>${task}</span>
+
+//             <div>
+//                 <button class="edit-btn">Edit</button>
+//                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
+//                 <button class="complete-btn">Done</button>
+//             </div>
+//         `
+
+//         taskList.appendChild(taskItem)
+
+//         addtask.value = ''
+
+//         const message = document.querySelector('.message')
+
+//         if (message) {
+//             message.remove()
+//         }
+
+//         localStorage.setItem('task', JSON.stringify(tasks))
+//     }
+// }
+
+submit.addEventListener('click', () => {
     const task = addtask.value
     const tasks = JSON.parse(localStorage.getItem('task')) || []
 
     if (task) {
 
         tasks.push(task)
+
+        task_counter(tasks)
 
         const taskList = document.getElementById('taskList')
 
@@ -40,8 +79,13 @@ function add_task() {
 
         localStorage.setItem('task', JSON.stringify(tasks))
     }
-}
+})
 
+addtask.addEventListener('keydown', (event) => {
+    if (event.key == 'Enter') {
+        submit.click();
+    }
+})
 
 // Reteriving tasks on the referesh 
 
@@ -99,6 +143,22 @@ function delete_task(button) {
     localStorage.setItem('task', JSON.stringify(tasks))
 
     taskItem.remove()
+
+    task_counter(tasks)
+
+    if (tasks && tasks.length === 0) {
+        
+    const task = document.getElementById('display')
+
+    const message = document.createElement('p')
+
+    message.classList.add('message')
+
+    message.textContent = 'Add a task to get started!'
+
+    task.appendChild(message)
+
+    }
 }
 
 // Function to clear the tasks
@@ -106,7 +166,8 @@ function delete_task(button) {
 const clearbtn = document.getElementById('clear-btn') 
 
 clearbtn.addEventListener('click', () => {
-    localStorage.clear()
+    localStorage.removeItem('task')
+    task_counter([])
 
     const taskitem = document.querySelectorAll('.task-item')
 
@@ -123,4 +184,16 @@ clearbtn.addEventListener('click', () => {
     message.textContent = 'Add a task to get started!'
 
     task.appendChild(message)
+
 })
+
+// Task counter function
+
+let counter = document.getElementById('task-counter')
+
+function task_counter(tasks) {
+
+    counter.textContent = tasks ? tasks.length : 0
+}
+
+task_counter(tasks)

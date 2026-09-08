@@ -17,7 +17,7 @@
     <div class="container">
         <div class="addCard">
             <input type="text" id="add" class="addTask" placeholder="Enter a task...">
-            <button type="submit" id="submit" class="add-btn" onclick="add_task()">Add Task</button>
+            <button type="submit" id="submit" class="add-btn">Add Task</button>
         </div>
         <div class="displayTask" id="display">
             <div class="nav">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <footer class="footer">
-        <p class="task-count"><span class="f-span">0</span> Tasks</p>
+        <p class="task-count"><span class="f-span" id="task-counter">0</span> Tasks</p>
         <button class="clear" id="clear-btn">Clear Tasks</button>
     </footer>
     
