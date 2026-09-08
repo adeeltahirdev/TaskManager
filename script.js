@@ -1,5 +1,7 @@
 const addtask = document.getElementById('add')
 const submit = document.getElementById('submit')
+const date = document.getElementById('date')
+const priority = document.getElementById('priority')
 
 
 // Function to add tasks
@@ -10,7 +12,7 @@ submit.addEventListener('click', () => {
 
     if (task) {
 
-        tasks.push({text:task, completed:false})
+        tasks.push({text:task, date:date.value, priority:priority.value, completed:false})
 
         task_counter(tasks)
 
@@ -22,6 +24,11 @@ submit.addEventListener('click', () => {
         taskItem.innerHTML = `
             <span>${task}</span>
 
+            <div class="task-meta">
+                <span>Due: ${date.value || 'No date'}</span>
+                <span class="priority-${priority.value.toLowerCase()}">${priority.value} priority</span>
+            </div>
+
             <div>
                 <button class="edit-btn" onclick="edit_task(this)">Edit</button>
                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
@@ -32,6 +39,8 @@ submit.addEventListener('click', () => {
         taskList.appendChild(taskItem)
 
         addtask.value = ''
+        date.value = ''
+        priority.value = 'Medium'
 
         const message = document.querySelector('.message')
 
@@ -64,6 +73,11 @@ if (tasks && tasks.length > 0) {
 
         taskitem.innerHTML = `
             <span>${task.text}</span>
+
+            <div class="task-meta">
+                <span>Due: ${task.date || 'No date'}</span>
+                <span class="priority-${(task.priority || 'Medium').toLowerCase()}">${task.priority || 'Medium'} priority</span>
+            </div>
 
             <div>
                 <button class="edit-btn" onclick="edit_task(this)">Edit</button>
@@ -201,6 +215,29 @@ function edit_task(button) {
 
     taskSpan.replaceWith(input)
 
+    const taskmeta = taskitem.querySelector('.task-meta')
+    const editdate = document.createElement('input')
+    editdate.type = 'date'
+    editdate.classList.add('edit-date')
+
+    const editpriority = document.createElement('select')
+    editpriority.classList.add('edit-priority')
+    editpriority.innerHTML = `
+        <option value="Low">Low Priority</option>
+        <option value="Medium">Medium Priority</option>
+        <option value="High">High Priority</option>
+    `
+
+    const savedtasks = JSON.parse(localStorage.getItem('task')) || []
+    const savedtask = savedtasks.find(item => item.text === taskText)
+
+    if (savedtask) {
+        editdate.value = savedtask.date || ''
+        editpriority.value = savedtask.priority || 'Medium'
+    }
+
+    taskmeta.replaceChildren(editdate, editpriority)
+
     const delbtn = taskitem.querySelector('.delete-btn')
     const completebtn = taskitem.querySelector('.complete-btn')
     const editbtn = taskitem.querySelector('.edit-btn')
@@ -208,11 +245,10 @@ function edit_task(button) {
     delbtn.remove()
     completebtn.remove()
 
-    editbtn.textContent = 'Press enter to save'
+    editbtn.textContent = 'Save'
 
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const newtext = input.value
+    function save_edit() {
+         const newtext = input.value
 
             const tasks = JSON.parse(localStorage.getItem('task')) || []
 
@@ -220,6 +256,8 @@ function edit_task(button) {
 
             if (task) {
                 task.text = newtext
+                task.date = editdate.value
+                task.priority = editpriority.value
             }
 
             localStorage.setItem('task', JSON.stringify(tasks))
@@ -228,6 +266,11 @@ function edit_task(button) {
             newTaskSpan.textContent = newtext
         
             input.replaceWith(newTaskSpan)
+
+            taskmeta.innerHTML = `
+                <span>Due: ${editdate.value || 'No date'}</span>
+                <span class="priority-${editpriority.value.toLowerCase()}">${editpriority.value} priority</span>
+            `
 
             const newDeleteBtn = document.createElement('button')
             newDeleteBtn.classList.add('delete-btn')
@@ -247,7 +290,16 @@ function edit_task(button) {
 
             editbtn.parentElement.appendChild(newDeleteBtn)
             editbtn.parentElement.appendChild(newCompleteBtn)
+    }
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+           save_edit()
         }
+    })
+
+    editbtn.addEventListener('click', () => {
+        save_edit()
     })
 
 }
