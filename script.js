@@ -23,7 +23,7 @@ function add_task() {
 
             <div>
                 <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
+                <button class="delete-btn" onclick="delete_task(this)">Delete</button>
                 <button class="complete-btn">Done</button>
             </div>
         `
@@ -47,7 +47,7 @@ function add_task() {
 
 const tasks = JSON.parse(localStorage.getItem('task'))
 
-if (tasks) {
+if (tasks && tasks.length > 0) {
 
     const tasklist = document.getElementById('taskList')
 
@@ -61,7 +61,7 @@ if (tasks) {
 
             <div>
                 <button class="edit-btn">Edit</button>
-                <button class="delete-btn" onclick="delete_task()">Delete</button>
+                <button class="delete-btn" onclick="delete_task(this)">Delete</button>
                 <button class="complete-btn">Done</button>
             </div>
         `
@@ -87,3 +87,18 @@ else {
 
 // Function to delele the task
 
+function delete_task(button) {
+    const taskItem = button.parentElement.parentElement
+
+    const taskText = taskItem.querySelector('span').textContent
+
+    let tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    tasks = tasks.filter(task => task !== taskText)
+
+    localStorage.setItem('task', JSON.stringify(tasks))
+
+    taskItem.remove()
+}
+
+// Function to clear the tasks

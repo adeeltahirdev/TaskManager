@@ -7,7 +7,19 @@
 body {
     font-family: Impact, 'Arial Narrow Bold', sans-serif;
     background-color: #f4f4f4;
+}
+
+.header {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(90deg, #007bff, #198754);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -27,7 +39,7 @@ body {
 .addTask {
     padding: 15px;
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid #198754;
     border-radius: 5px;
     color: #333;
     outline: none;
@@ -61,6 +73,49 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.nav{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 18px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.nav-items {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.nav-items:hover {
+    background-color: hsl(211, 100%, 55%);
+}
+
+.nav-items:active {
+    background-color: hsl(211, 100%, 60%);
+}
+
+.search-box {
+    padding: 5px 25px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    font-size: 0.875rem;
+}
+
+.search-btn {
+    padding: 7px;
+    border-radius: 3px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    margin-left: 5px;
+}
 
 .message {
     font-size: 1rem;
@@ -122,4 +177,38 @@ body {
 
 .complete-btn:active {
     background-color: hsl(211, 100%, 60%);
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: linear-gradient(90deg, #198754, #007bff);
+}
+
+.f-span {
+    color: hsl(45, 100%, 51%);
+    font-size: 1.1rem;
+}
+
+.task-count {
+    color: #111;
+}
+
+.clear {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.clear:hover {
+    background-color: hsl(354, 70%, 60%);
+}
+
+.clear:active {
+    background-color: hsl(354, 70%, 65%);
 }
