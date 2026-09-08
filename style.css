@@ -133,6 +133,12 @@ body {
     justify-content: space-between;
 }
 
+.task-item > div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
 .edit-btn, .delete-btn, .complete-btn {
     padding: 15px;
     color: #fff;
