@@ -4,51 +4,13 @@ const submit = document.getElementById('submit')
 
 // Function to add tasks
 
-// function add_task() {
-
-//     const task = addtask.value
-//     const tasks = JSON.parse(localStorage.getItem('task')) || []
-
-//     if (task) {
-
-//         tasks.push(task)
-
-//         const taskList = document.getElementById('taskList')
-
-//         const taskItem = document.createElement('li')
-//         taskItem.classList.add('task-item')
-
-//         taskItem.innerHTML = `
-//             <span>${task}</span>
-
-//             <div>
-//                 <button class="edit-btn">Edit</button>
-//                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
-//                 <button class="complete-btn">Done</button>
-//             </div>
-//         `
-
-//         taskList.appendChild(taskItem)
-
-//         addtask.value = ''
-
-//         const message = document.querySelector('.message')
-
-//         if (message) {
-//             message.remove()
-//         }
-
-//         localStorage.setItem('task', JSON.stringify(tasks))
-//     }
-// }
-
 submit.addEventListener('click', () => {
     const task = addtask.value
     const tasks = JSON.parse(localStorage.getItem('task')) || []
 
     if (task) {
 
-        tasks.push(task)
+        tasks.push({text:task, completed:false})
 
         task_counter(tasks)
 
@@ -63,7 +25,7 @@ submit.addEventListener('click', () => {
             <div>
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
-                <button class="complete-btn">Done</button>
+                <button class="complete-btn" onclick="complete_task(this)">Done</button>
             </div>
         `
 
@@ -101,14 +63,21 @@ if (tasks && tasks.length > 0) {
         taskitem.classList.add('task-item')
 
         taskitem.innerHTML = `
-            <span>${task}</span>
+            <span>${task.text}</span>
 
             <div>
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
-                <button class="complete-btn">Done</button>
+                <button class="complete-btn" onclick="complete_task(this)">Done</button>
             </div>
         `
+
+        if (task.completed) {
+            const taskspan = taskitem.querySelector('span')
+            taskspan.classList.add('completed-task')
+            const editbtn = taskitem.querySelector('.edit-btn')
+            editbtn.remove()
+        }
 
         tasklist.appendChild(taskitem)
     })
@@ -138,7 +107,7 @@ function delete_task(button) {
 
     let tasks = JSON.parse(localStorage.getItem('task')) || []
 
-    tasks = tasks.filter(task => task !== taskText)
+    tasks = tasks.filter(task => task.text !== taskText)
 
     localStorage.setItem('task', JSON.stringify(tasks))
 
@@ -195,5 +164,29 @@ function task_counter(tasks) {
 
     counter.textContent = tasks ? tasks.length : 0
 }
+
+// Function for task completion btn
+
+function complete_task(button) {
+    
+    const taskitem = button.parentElement.parentElement
+    const taskspan = taskitem.querySelector('span')
+    const taskText = taskspan.textContent 
+
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    const task = tasks.find(item => item.text === taskText)
+
+    if (task) {
+        task.completed = true
+        taskspan.classList.add('completed-task')
+        const editbtn = taskitem.querySelector('.edit-btn')
+        editbtn.remove()
+    }
+
+    localStorage.setItem('task', JSON.stringify(tasks))
+
+}
+
 
 task_counter(tasks)

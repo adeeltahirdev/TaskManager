@@ -90,7 +90,6 @@ body {
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .nav-items:hover {
@@ -211,4 +210,9 @@ body {
 
 .clear:active {
     background-color: hsl(354, 70%, 65%);
+}
+
+.completed-task {
+    text-decoration: line-through;
+    color: #555;
 }
