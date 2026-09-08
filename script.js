@@ -102,3 +102,25 @@ function delete_task(button) {
 }
 
 // Function to clear the tasks
+
+const clearbtn = document.getElementById('clear-btn') 
+
+clearbtn.addEventListener('click', () => {
+    localStorage.clear()
+
+    const taskitem = document.querySelectorAll('.task-item')
+
+    taskitem.forEach(taskitem => {
+        taskitem.remove()
+    })
+
+    const task = document.getElementById('display')
+
+    const message = document.createElement('p')
+
+    message.classList.add('message')
+
+    message.textContent = 'Add a task to get started!'
+
+    task.appendChild(message)
+})
