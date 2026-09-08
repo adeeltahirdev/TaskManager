@@ -23,7 +23,7 @@ submit.addEventListener('click', () => {
             <span>${task}</span>
 
             <div>
-                <button class="edit-btn">Edit</button>
+                <button class="edit-btn" onclick="edit_task(this)">Edit</button>
                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
                 <button class="complete-btn" onclick="complete_task(this)">Done</button>
             </div>
@@ -66,7 +66,7 @@ if (tasks && tasks.length > 0) {
             <span>${task.text}</span>
 
             <div>
-                <button class="edit-btn">Edit</button>
+                <button class="edit-btn" onclick="edit_task(this)">Edit</button>
                 <button class="delete-btn" onclick="delete_task(this)">Delete</button>
                 <button class="complete-btn" onclick="complete_task(this)">Done</button>
             </div>
@@ -188,5 +188,68 @@ function complete_task(button) {
 
 }
 
+// Function for editing the task
+
+function edit_task(button) {
+    const taskitem = button.parentElement.parentElement
+    const taskSpan = taskitem.querySelector('span')
+    const taskText = taskSpan.textContent
+
+    const input = document.createElement('input')
+    input.classList.add('edit-input')
+    input.value = taskText
+
+    taskSpan.replaceWith(input)
+
+    const delbtn = taskitem.querySelector('.delete-btn')
+    const completebtn = taskitem.querySelector('.complete-btn')
+    const editbtn = taskitem.querySelector('.edit-btn')
+
+    delbtn.remove()
+    completebtn.remove()
+
+    editbtn.textContent = 'Press enter to save'
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const newtext = input.value
+
+            const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+            const task = tasks.find(item => item.text === taskText)
+
+            if (task) {
+                task.text = newtext
+            }
+
+            localStorage.setItem('task', JSON.stringify(tasks))
+
+            const newTaskSpan = document.createElement('span')
+            newTaskSpan.textContent = newtext
+        
+            input.replaceWith(newTaskSpan)
+
+            const newDeleteBtn = document.createElement('button')
+            newDeleteBtn.classList.add('delete-btn')
+            newDeleteBtn.textContent = 'Delete'
+            newDeleteBtn.onclick = function () {
+                delete_task(this)
+            }
+
+            const newCompleteBtn = document.createElement('button')
+            newCompleteBtn.classList.add('complete-btn')
+            newCompleteBtn.textContent = 'Done'
+            newCompleteBtn.onclick = function () {
+                complete_task(this)
+            }
+
+            editbtn.textContent = 'Edit'
+
+            editbtn.parentElement.appendChild(newDeleteBtn)
+            editbtn.parentElement.appendChild(newCompleteBtn)
+        }
+    })
+
+}
 
 task_counter(tasks)

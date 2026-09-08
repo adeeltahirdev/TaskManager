@@ -216,3 +216,11 @@ body {
     text-decoration: line-through;
     color: #555;
 }
+
+.edit-input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid hsl(45, 100%, 51%);
+}
