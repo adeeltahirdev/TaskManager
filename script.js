@@ -168,6 +168,8 @@ function edit_task(button) {
     delbtn.remove()
     completebtn.remove()
 
+    editbtn.classList.remove('edit-btn')
+    editbtn.classList.add('save-btn')
     editbtn.textContent = 'Save'
 
     function save_edit() {

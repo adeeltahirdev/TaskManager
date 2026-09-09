@@ -163,7 +163,7 @@ h1 {
     align-items: center;
 }
 
-.edit-btn, .delete-btn, .complete-btn {
+.edit-btn, .delete-btn, .complete-btn, .save-btn {
     padding: 15px;
     color: #fff;
     border: none;
@@ -206,6 +206,18 @@ h1 {
 
 .complete-btn:active {
     background-color: hsl(211, 100%, 60%);
+}
+
+.save-btn {
+    background-color: #198754;
+}
+
+.save-btn:hover {
+    background-color: hsl(152, 69%, 35%);
+}
+
+.save-btn:active {
+    background-color: hsl(152, 69%, 40%);
 }
 
 .footer {
