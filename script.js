@@ -8,6 +8,8 @@ const completedbtn = document.getElementById('completed-btn')
 const lowP = document.getElementById('low-priority')
 const mediumP = document.getElementById('medium-priority')
 const highP = document.getElementById('high-priority')
+const search = document.getElementById('search')
+const searchbtn = document.querySelector('.search-btn')
 
 
 // Task counter function
@@ -90,15 +92,10 @@ const clearbtn = document.getElementById('clear-btn')
 
 clearbtn.addEventListener('click', () => {
     localStorage.removeItem('task')
+    
     task_counter([])
 
-    const taskitem = document.querySelectorAll('.task-item')
-
-    taskitem.forEach(taskitem => {
-        taskitem.remove()
-    })
-
-    render_task(tasks)
+    render_task([])
 
 })
 
@@ -357,6 +354,24 @@ highP.addEventListener('click', () => {
     const highPtask = tasks.filter(item => item.priority === 'High')
     
     render_task(highPtask)
+})
+
+// Search tasks by their text
+
+function search_tasks() {
+    const searchTerm = search.value.trim().toLowerCase()
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+    const matchingTasks = tasks.filter(task => task.text.toLowerCase().includes(searchTerm))
+
+    render_task(matchingTasks)
+}
+
+searchbtn.addEventListener('click', search_tasks)
+
+search.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        search_tasks()
+    }
 })
 
 task_counter(tasks)
