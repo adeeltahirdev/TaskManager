@@ -2,114 +2,61 @@ const addtask = document.getElementById('add')
 const submit = document.getElementById('submit')
 const date = document.getElementById('date')
 const priority = document.getElementById('priority')
+const allbtn = document.getElementById('all-btn')
+const activebtn = document.getElementById('active-btn')
+const completedbtn = document.getElementById('completed-btn')
 
+
+// Task counter function
+
+let counter = document.getElementById('task-counter')
+
+function task_counter(tasks) {
+
+    counter.textContent = tasks ? tasks.length : 0
+}
 
 // Function to add tasks
 
 submit.addEventListener('click', () => {
+
     const task = addtask.value
     const tasks = JSON.parse(localStorage.getItem('task')) || []
 
     if (task) {
 
-        tasks.push({text:task, date:date.value, priority:priority.value, completed:false})
+        tasks.push({
+            text: task,
+            date: date.value,
+            priority: priority.value,
+            completed: false
+        })
 
+        localStorage.setItem('task', JSON.stringify(tasks))
+
+        render_task(tasks)
         task_counter(tasks)
-
-        const taskList = document.getElementById('taskList')
-
-        const taskItem = document.createElement('li')
-        taskItem.classList.add('task-item')
-
-        taskItem.innerHTML = `
-            <span>${task}</span>
-
-            <div class="task-meta">
-                <span>Due: ${date.value || 'No date'}</span>
-                <span class="priority-${priority.value.toLowerCase()}">${priority.value} priority</span>
-            </div>
-
-            <div>
-                <button class="edit-btn" onclick="edit_task(this)">Edit</button>
-                <button class="delete-btn" onclick="delete_task(this)">Delete</button>
-                <button class="complete-btn" onclick="complete_task(this)">Done</button>
-            </div>
-        `
-
-        taskList.appendChild(taskItem)
 
         addtask.value = ''
         date.value = ''
         priority.value = 'Medium'
+    }
 
-        const message = document.querySelector('.message')
-
-        if (message) {
-            message.remove()
+    addtask.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            submit.click()
         }
+    })
 
-        localStorage.setItem('task', JSON.stringify(tasks))
-    }
-})
-
-addtask.addEventListener('keydown', (event) => {
-    if (event.key == 'Enter') {
-        submit.click();
-    }
 })
 
 // Reteriving tasks on the referesh 
 
-const tasks = JSON.parse(localStorage.getItem('task'))
+const tasks = JSON.parse(localStorage.getItem('task')) || []
 
-if (tasks && tasks.length > 0) {
+render_task(tasks)
 
-    const tasklist = document.getElementById('taskList')
-
-    tasks.forEach(task => {
-
-        const taskitem = document.createElement('li')
-        taskitem.classList.add('task-item')
-
-        taskitem.innerHTML = `
-            <span>${task.text}</span>
-
-            <div class="task-meta">
-                <span>Due: ${task.date || 'No date'}</span>
-                <span class="priority-${(task.priority || 'Medium').toLowerCase()}">${task.priority || 'Medium'} priority</span>
-            </div>
-
-            <div>
-                <button class="edit-btn" onclick="edit_task(this)">Edit</button>
-                <button class="delete-btn" onclick="delete_task(this)">Delete</button>
-                <button class="complete-btn" onclick="complete_task(this)">Done</button>
-            </div>
-        `
-
-        if (task.completed) {
-            const taskspan = taskitem.querySelector('span')
-            taskspan.classList.add('completed-task')
-            const editbtn = taskitem.querySelector('.edit-btn')
-            editbtn.remove()
-        }
-
-        tasklist.appendChild(taskitem)
-    })
-
-}
-
-else {
-
-    const task = document.getElementById('display')
-
-    const message = document.createElement('p')
-
-    message.classList.add('message')
-
-    message.textContent = 'Add a task to get started!'
-
-    task.appendChild(message)
-}
+task_counter(tasks)
 
 
 // Function to delele the task
@@ -144,6 +91,7 @@ function delete_task(button) {
     }
 }
 
+
 // Function to clear the tasks
 
 const clearbtn = document.getElementById('clear-btn') 
@@ -170,14 +118,6 @@ clearbtn.addEventListener('click', () => {
 
 })
 
-// Task counter function
-
-let counter = document.getElementById('task-counter')
-
-function task_counter(tasks) {
-
-    counter.textContent = tasks ? tasks.length : 0
-}
 
 // Function for task completion btn
 
@@ -303,5 +243,83 @@ function edit_task(button) {
     })
 
 }
+
+function render_task(tasks) {
+
+    const tasklist = document.getElementById('taskList')
+
+    tasklist.innerHTML = ''
+
+    if (tasks && tasks.length > 0) {
+
+        tasks.forEach(task => {
+
+            const taskitem = document.createElement('li')
+            taskitem.classList.add('task-item')
+
+            taskitem.innerHTML = `
+                <span>${task.text}</span>
+
+                <div class="task-meta">
+                    <span>Due: ${task.date || 'No date'}</span>
+                    <span class="priority-${(task.priority || 'Medium').toLowerCase()}">${task.priority || 'Medium'} priority</span>
+                </div>
+
+                <div>
+                    <button class="edit-btn" onclick="edit_task(this)">Edit</button>
+                    <button class="delete-btn" onclick="delete_task(this)">Delete</button>
+                    <button class="complete-btn" onclick="complete_task(this)">Done</button>
+                </div>
+            `
+
+            if (task.completed) {
+                const taskspan = taskitem.querySelector('span')
+                taskspan.classList.add('completed-task')
+                const editbtn = taskitem.querySelector('.edit-btn')
+                editbtn.remove()
+            }
+
+            tasklist.appendChild(taskitem)
+        })
+
+    }
+
+    else {
+
+        const task = document.getElementById('display')
+
+        const message = document.createElement('p')
+
+        message.classList.add('message')
+
+        message.textContent = 'Add a task to get started!'
+
+        task.appendChild(message)
+    }
+}
+
+// Filtering the tasks
+
+allbtn.addEventListener('click', () => {
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    render_task(tasks)
+})
+
+activebtn.addEventListener('click', () => {
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    const activeTask = tasks.filter(item => item.completed === false)
+
+    render_task(activeTask)
+})
+
+completedbtn.addEventListener('click', () => {
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    const completedTask = tasks.filter(item => item.completed === true)
+
+    render_task(completedTask)
+})
 
 task_counter(tasks)

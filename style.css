@@ -272,3 +272,8 @@ h1 {
 .priority-high { background-color: #dc3545; }
 .priority-medium { background-color: #d99400; }
 .priority-low { background-color: #198754; }
+
+
+.task-item.active {
+    background-color: rgb(75, 0, 19);
+}
