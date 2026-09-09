@@ -119,7 +119,9 @@ function complete_task(button) {
         task.completed = true
         taskspan.classList.add('completed-task')
         const editbtn = taskitem.querySelector('.edit-btn')
+        const donebtn = taskitem.querySelector('.complete-btn')
         editbtn.remove()
+        donebtn.remove()
     }
 
     localStorage.setItem('task', JSON.stringify(tasks))
@@ -265,7 +267,9 @@ function render_task(tasks) {
                 const taskspan = taskitem.querySelector('span')
                 taskspan.classList.add('completed-task')
                 const editbtn = taskitem.querySelector('.edit-btn')
+                const donebtn = taskitem.querySelector('.complete-btn')
                 editbtn.remove()
+                donebtn.remove()
             }
 
             tasklist.appendChild(taskitem)
