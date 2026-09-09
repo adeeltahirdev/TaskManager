@@ -125,7 +125,7 @@ function complete_task(button) {
 
 }
 
-// Function for editing the task
+// Function for editing the tasks
 
 function edit_task(button) {
     const taskitem = button.parentElement.parentElement
