@@ -274,6 +274,6 @@ h1 {
 .priority-low { background-color: #198754; }
 
 
-.task-item.active {
+.nav-items.active {
     background-color: rgb(75, 0, 19);
 }

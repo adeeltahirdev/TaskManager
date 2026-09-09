@@ -41,13 +41,13 @@ submit.addEventListener('click', () => {
         date.value = ''
         priority.value = 'Medium'
     }
+    
+})
 
-    addtask.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            submit.click()
-        }
-    })
-
+addtask.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        submit.click()
+    }
 })
 
 // Reteriving tasks on the referesh 
@@ -76,19 +76,8 @@ function delete_task(button) {
 
     task_counter(tasks)
 
-    if (tasks && tasks.length === 0) {
-        
-    const task = document.getElementById('display')
+    render_task(tasks)
 
-    const message = document.createElement('p')
-
-    message.classList.add('message')
-
-    message.textContent = 'Add a task to get started!'
-
-    task.appendChild(message)
-
-    }
 }
 
 
@@ -106,15 +95,7 @@ clearbtn.addEventListener('click', () => {
         taskitem.remove()
     })
 
-    const task = document.getElementById('display')
-
-    const message = document.createElement('p')
-
-    message.classList.add('message')
-
-    message.textContent = 'Add a task to get started!'
-
-    task.appendChild(message)
+    render_task(tasks)
 
 })
 
@@ -250,6 +231,11 @@ function render_task(tasks) {
 
     tasklist.innerHTML = ''
 
+     const existingMessage = display.querySelector('.message')
+    if (existingMessage) {
+        existingMessage.remove()
+    }
+
     if (tasks && tasks.length > 0) {
 
         tasks.forEach(task => {
@@ -285,28 +271,42 @@ function render_task(tasks) {
     }
 
     else {
-
-        const task = document.getElementById('display')
-
         const message = document.createElement('p')
-
         message.classList.add('message')
-
         message.textContent = 'Add a task to get started!'
-
-        task.appendChild(message)
+        display.appendChild(message)
     }
 }
+
+
+// Active tab function
+
+function active_tab(button) {
+    const tabs = [allbtn, activebtn, completedbtn]
+
+    tabs.forEach(tabs => {
+        tabs.classList.remove('active')
+    })
+
+    button.classList.add('active')
+}
+
 
 // Filtering the tasks
 
 allbtn.addEventListener('click', () => {
+
+    active_tab(allbtn)
+
     const tasks = JSON.parse(localStorage.getItem('task')) || []
 
     render_task(tasks)
 })
 
 activebtn.addEventListener('click', () => {
+
+    active_tab(activebtn)
+
     const tasks = JSON.parse(localStorage.getItem('task')) || []
 
     const activeTask = tasks.filter(item => item.completed === false)
@@ -315,6 +315,9 @@ activebtn.addEventListener('click', () => {
 })
 
 completedbtn.addEventListener('click', () => {
+
+    active_tab(completedbtn)
+
     const tasks = JSON.parse(localStorage.getItem('task')) || []
 
     const completedTask = tasks.filter(item => item.completed === true)
