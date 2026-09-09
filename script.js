@@ -5,6 +5,9 @@ const priority = document.getElementById('priority')
 const allbtn = document.getElementById('all-btn')
 const activebtn = document.getElementById('active-btn')
 const completedbtn = document.getElementById('completed-btn')
+const lowP = document.getElementById('low-priority')
+const mediumP = document.getElementById('medium-priority')
+const highP = document.getElementById('high-priority')
 
 
 // Task counter function
@@ -323,6 +326,33 @@ completedbtn.addEventListener('click', () => {
     const completedTask = tasks.filter(item => item.completed === true)
 
     render_task(completedTask)
+})
+
+lowP.addEventListener('click', () => {
+    
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    const lowPtask = tasks.filter(item => item.priority === 'Low')
+    
+    render_task(lowPtask)
+})
+
+mediumP.addEventListener('click', () => {
+    
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    const mediumPtask = tasks.filter(item => item.priority === 'Medium')
+    
+    render_task(mediumPtask)
+})
+
+highP.addEventListener('click', () => {
+    
+    const tasks = JSON.parse(localStorage.getItem('task')) || []
+
+    const highPtask = tasks.filter(item => item.priority === 'High')
+    
+    render_task(highPtask)
 })
 
 task_counter(tasks)

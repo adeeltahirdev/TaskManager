@@ -1,49 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Manager</title>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="header">
-        <h1 class="heading">Task Manager</h1>
+      <h1 class="heading">Task Manager</h1>
     </header>
     <div class="container">
-        <div class="addCard">
-            <input type="text" id="add" class="addTask" placeholder="Enter a task...">
-            <input type="date" id="date" class="task-date">
-            <select id="priority" class="task-priority">
-                <option value="Low">Low Priority</option>
-                <option value="Medium" selected>Medium Priority</option>
-                <option value="High">High Priority</option>
-            </select>
-            <button type="submit" id="submit" class="add-btn">Add Task</button>
-        </div>
-        <div class="displayTask" id="display">
-            <div class="nav">
-                <button class="nav-items" id="all-btn">All</button>
-                <button class="nav-items" id="active-btn">Active</button>
-                <button class="nav-items" id="completed-btn">Completed</button>
-                <div class="search">
-                    <input type="search" id="search" class="search-box" placeholder="Search task...">
-                    <button class="search-btn">Search</button>
-                </div>
+      <div class="addCard">
+        <input
+          type="text"
+          id="add"
+          class="addTask"
+          placeholder="Enter a task..."
+        />
+        <input type="date" id="date" class="task-date" />
+        <select id="priority" class="task-priority">
+          <option value="Low">Low Priority</option>
+          <option value="Medium" selected>Medium Priority</option>
+          <option value="High">High Priority</option>
+        </select>
+        <button type="submit" id="submit" class="add-btn">Add Task</button>
+      </div>
+      <div class="displayTask" id="display">
+        <div class="nav">
+          <button class="nav-items" id="all-btn">All</button>
+          <button class="nav-items" id="active-btn">Active</button>
+          <button class="nav-items" id="completed-btn">Completed</button>
+          <div class="dropdown">
+            <button class="nav-items">Priorities</button>
+            <div class="dropdown-content">
+              <p id="low-priority">Low</p>
+              <p id="medium-priority">Medium</p>
+              <p id="high-priority">High</p>
             </div>
-            <ol class="tasks" id="taskList"></ol>
+          </div>
+          <div class="search">
+            <input
+              type="search"
+              id="search"
+              class="search-box"
+              placeholder="Search task..."
+            />
+            <button class="search-btn">Search</button>
+          </div>
         </div>
+        <ol class="tasks" id="taskList"></ol>
+      </div>
     </div>
     <footer class="footer">
-        <p class="task-count"><span class="f-span" id="task-counter">0</span> Tasks</p>
-        <button class="clear" id="clear-btn">Clear Tasks</button>
+      <p class="task-count">
+        <span class="f-span" id="task-counter">0</span> Tasks
+      </p>
+      <button class="clear" id="clear-btn">Clear Tasks</button>
     </footer>
-    
+
     <!-- JavaScript -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
